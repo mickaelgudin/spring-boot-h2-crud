@@ -1,9 +1,23 @@
 package com.spring.crud.demo.utils;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+
 import java.util.Arrays;
 
 import java.util.List;
 import java.util.function.Supplier;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import com.spring.crud.demo.model.TrainStation;
 
 public class HelperUtil {
@@ -13,10 +27,71 @@ public class HelperUtil {
 
 
     public static Supplier<List<TrainStation>> trainStationsSupplier = () ->
+    
             Arrays.asList(
-		            new TrainStation("Paris Montparnasse", 48.8402, 2.3193),
-		            new TrainStation("Bordeaux St Jean", 44.8260022,-0.558805),
-		            new TrainStation("Strasbourg", 48.5850571,7.7323068)
+		            getTrainVersaillesChantiers()
             );
+            
+    public static TrainStation getTrainVersaillesChantiers() {
+    	URL url = null;
+		try {
+			url = new URL("https://api.navitia.io/v1/coverage/fr-idf/places?q=Gare%20de%20Versailles%20Chantiers&type%5B%5D=stop_area&");
+		} catch (MalformedURLException e2) {
+			e2.printStackTrace();
+		}
+        HttpURLConnection conn = null;
+		try {
+			conn = (HttpURLConnection) url.openConnection();
+		} catch (IOException e2) {
+			e2.printStackTrace();
+		}
+
+        conn.setRequestProperty("Authorization", "eabc7e82-7f1f-42b9-b9d2-c8cc477b7bdd");
+        
+        conn.setRequestProperty("Content-Type","application/json");
+        try {
+			conn.setRequestMethod("GET");
+		} catch (ProtocolException e1) {
+			e1.printStackTrace();
+		}
+
+
+        BufferedReader in = null;
+		try {
+			in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+        String output;
+
+        StringBuffer response = new StringBuffer();
+        try {
+			while ((output = in.readLine()) != null) {
+			    response.append(output);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+        try {
+			in.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        JSONParser parser = new JSONParser(); 
+        JSONObject json = null;
+		try {
+			json = (JSONObject) parser.parse(response.toString());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+        JSONArray places = (JSONArray) json.get("places");
+        
+        JSONObject placeOne = (JSONObject) places.get(0);
+        JSONObject stopArea = (JSONObject) placeOne.get("stop_area");
+        JSONObject coord = (JSONObject) stopArea.get("coord");
+        
+        return new TrainStation(String.valueOf(stopArea.get("name")), Double.valueOf(String.valueOf(coord.get("lon")) ), Double.valueOf(String.valueOf(coord.get("lat")) ));
+    }
 
 }
