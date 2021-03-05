@@ -11,6 +11,11 @@ public interface TrainStationService {
 
 	TrainStation getOneTrainStationByName(String name);
 
-	TrainStation getTrainStationById(int empId);
+	TrainStation getTrainStationById(int stationId);
+
+	TrainStation save(TrainStation trainStation);
 	
+	TrainStation update(int id, TrainStation trainStation);
+
+    void delete(int id);
 }
