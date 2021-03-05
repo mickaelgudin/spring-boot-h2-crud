@@ -2,6 +2,7 @@ package com.spring.crud.demo.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -38,7 +39,7 @@ public class HelperUtil {
      * @return
      */
     public static TrainStation getTrainVersaillesChantiers() {
-    	JSONObject json = HelperUtil.getResponseFromUrl("https://api.navitia.io/v1/coverage/fr-idf/places?q=Gare%20de%20Versailles%20Chantiers&type%5B%5D=stop_area&");
+    	JSONObject json = HelperUtil.getResponseFromUrl("https://api.navitia.io/v1/coverage/fr-idf/places?q=Gare%20de%20Versailles%20Chantiers&type%5B%5D=stop_area&", true);
 		
     	if(json != null) {
 			//we can not access json property - here we get an array places
@@ -53,61 +54,53 @@ public class HelperUtil {
         return new TrainStation();
     }
     
-    public static JSONObject getResponseFromUrl(String urlOfEndpoint) {
+    public static JSONObject getResponseFromUrl(String urlOfEndpoint, boolean nativiaApi) {
     	URL url = null;
 		try {
 			url = new URL(urlOfEndpoint);
-		} catch (MalformedURLException e2) {
-			e2.printStackTrace();
-		}
-        HttpURLConnection conn = null;
-		try {
+			HttpURLConnection conn = null;
 			conn = (HttpURLConnection) url.openConnection();
-		} catch (IOException e2) {
-			e2.printStackTrace();
-		}
-
-        conn.setRequestProperty("Authorization", "eabc7e82-7f1f-42b9-b9d2-c8cc477b7bdd");
-        
-        conn.setRequestProperty("Content-Type","application/json");
-        try {
+			if(nativiaApi) {
+				conn.setRequestProperty("Authorization", "eabc7e82-7f1f-42b9-b9d2-c8cc477b7bdd");
+	        }
+			
+			conn.setRequestProperty("Content-Type","application/json");
 			conn.setRequestMethod("GET");
-		} catch (ProtocolException e1) {
-			e1.printStackTrace();
+			return getObjectFromJson(conn.getInputStream());
+		} 
+		catch (IOException e) {
+			return null;
 		}
-
-
-        BufferedReader in = null;
-		try {
-			in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-        String output;
-
-        StringBuffer response = new StringBuffer();
-        try {
-			while ((output = in.readLine()) != null) {
-			    response.append(output);
+    }
+    
+    public static JSONObject getObjectFromJson(InputStream inputStream) {
+	    	BufferedReader in = null;
+			in = new BufferedReader(new InputStreamReader(inputStream));
+	        String output;
+	
+	        StringBuffer response = new StringBuffer();
+	        try {
+				while ((output = in.readLine()) != null) {
+				    response.append(output);
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-        try {
-			in.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-        JSONParser parser = new JSONParser(); 
-        JSONObject json = null;
-		try {
-			json = (JSONObject) parser.parse(response.toString());
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		
-		return json;
+	
+	        try {
+				in.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+	        JSONParser parser = new JSONParser(); 
+	        JSONObject json = null;
+			try {
+				json = (JSONObject) parser.parse(response.toString());
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			
+			return json;
     }
 
 }

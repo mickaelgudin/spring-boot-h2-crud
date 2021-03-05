@@ -22,21 +22,21 @@ public class TrainStationServiceImpl implements TrainStationService {
 	@Override
 	public TrainStation getOneTrainStationByName(String name) {
 
-		List<TrainStation> students = repository.findAll();
+		List<TrainStation> trainStations = repository.findAll();
 
-		for (TrainStation emp : students) {
-			if (emp.getName().equalsIgnoreCase(name))
-				return emp;
+		for (TrainStation trainStation : trainStations) {
+			if (trainStation.getName().equalsIgnoreCase(name))
+				return trainStation;
 		}
 		return null;
 	}
 
 	@Override
-	public TrainStation getTrainStationById(int empId) {
-		List<TrainStation> students = repository.findAll();
-		for (TrainStation emp : students) {
-			if (empId == emp.getId())
-				return emp;
+	public TrainStation getTrainStationById(int trainStationId) {
+		List<TrainStation> trainStations = repository.findAll();
+		for (TrainStation trainStation : trainStations) {
+			if (trainStationId == trainStation.getId())
+				return trainStation;
 		}
 		return null;
 	}
