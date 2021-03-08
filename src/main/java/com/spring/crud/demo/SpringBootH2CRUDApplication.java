@@ -1,6 +1,7 @@
 package com.spring.crud.demo;
 
 import com.spring.crud.demo.model.TrainStation;
+import com.spring.crud.demo.repository.LineTrainStationRepository;
 import com.spring.crud.demo.repository.TrainStationRepository;
 import com.spring.crud.demo.utils.HelperUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -28,12 +29,14 @@ public class SpringBootH2CRUDApplication {
 	@Autowired
 	private TrainStationRepository trainStationRepository;
 	
+	
 	@Bean
 	CommandLineRunner runner() {
 		return args -> {
-			List<TrainStation> students = trainStationRepository.findAll();
-			if (students.isEmpty()) {
-				trainStationRepository.saveAll(HelperUtil.trainStationsSupplier.get());
+			List<TrainStation> stations = trainStationRepository.findAll();
+			if (stations.isEmpty()) {
+				HelperUtil helper = new HelperUtil();
+				trainStationRepository.saveAll(helper.getTrainsStations());
 			}
 		};
 	}

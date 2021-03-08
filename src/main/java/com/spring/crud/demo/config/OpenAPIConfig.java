@@ -16,10 +16,10 @@ public class OpenAPIConfig {
         return new OpenAPI()
                 .info(new Info().title("CRUD API")
                 .version(appVersion)
-                 .contact(new Contact().name("Rahul Ghadage")
-                         .url("https://github.com/rahul-ghadge"))
-                .description("This is a sample CRUD application using spring data")
-                .termsOfService("http://swagger.io/terms/")
+                 .contact(new Contact().name("Mickaelgudin")
+                         .url("https://github.com/mickaelgudin/spring-boot-h2-crud"))
+                .description("Back projet")
+                .termsOfService("http://swagger.io/")
                 .license(new License().name("Apache 2.0").url("http://springdoc.org")));
     }
 }

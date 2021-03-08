@@ -4,6 +4,8 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -12,32 +14,32 @@ public class TrainStation implements Serializable {
 
 	@Id
 	@GeneratedValue
-	private int id;
+	private int trainStationId;
 	private String name;
 	private Double longitude;
 	private Double latitude;
-	
-	
+	@ManyToMany(cascade = CascadeType.PERSIST)
+	@JoinTable(name = "stations_lines", joinColumns = @JoinColumn(name = "trainStationId"), inverseJoinColumns = @JoinColumn(name = "lineId"))
+	private List<LineTrainStation> lines = new ArrayList<>();
 
 	public TrainStation() {
 		super();
 	}
 
-	public TrainStation( String name, Double longitude, Double latitude) {
+	public TrainStation(String name, Double longitude, Double latitude) {
 		super();
 		this.name = name;
 		this.longitude = longitude;
 		this.latitude = latitude;
 	}
 
-	public int getId() {
-		return id;
+	public int getTrainStationId() {
+		return trainStationId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setTrainStationId(int trainStationId) {
+		this.trainStationId = trainStationId;
 	}
-
 
 	public String getName() {
 		return name;
@@ -61,6 +63,14 @@ public class TrainStation implements Serializable {
 
 	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
+	}
+
+	public List<LineTrainStation> getLines() {
+		return lines;
+	}
+
+	public void setLines(List<LineTrainStation> lines) {
+		this.lines = lines;
 	}
 
 }
