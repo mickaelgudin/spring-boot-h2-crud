@@ -42,7 +42,7 @@ public class TrainStationServiceImpl implements TrainStationService {
 	public TrainStation getTrainStationById(int trainStationId) {
 		List<TrainStation> trainStations = repository.findAll();
 		for (TrainStation trainStation : trainStations) {
-			if (trainStationId == trainStation.getId())
+			if (trainStationId == trainStation.getTrainStationId())
 				return trainStation;
 		}
 		return null;
@@ -57,7 +57,7 @@ public class TrainStationServiceImpl implements TrainStationService {
 	public TrainStation update(int id, TrainStation trainStation) {
 		if(!repository.existsById(id) ) return null;
     	
-		trainStation.setId(id);
+		trainStation.setTrainStationId(id);
         return repository.save(trainStation);
 	}
 
