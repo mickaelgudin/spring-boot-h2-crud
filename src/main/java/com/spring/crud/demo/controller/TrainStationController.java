@@ -27,10 +27,6 @@ public class TrainStationController {
 		return trainStationService.getTrainStationById(id);
 	}
 	
-	@GetMapping("/by-name/{name}")
-	public TrainStation getOneStudentByFirstName(@PathVariable String name) {
-		return trainStationService.getOneTrainStationByName(name);
-	}
 	
 	@PostMapping
     public ResponseEntity<?> save(@RequestBody TrainStation trainStation) {

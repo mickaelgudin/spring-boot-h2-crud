@@ -9,8 +9,6 @@ public interface TrainStationService {
 	
 	List<TrainStation> getAll();
 
-	TrainStation getOneTrainStationByName(String name);
-
 	TrainStation getTrainStationById(int stationId);
 
 	TrainStation save(TrainStation trainStation);
