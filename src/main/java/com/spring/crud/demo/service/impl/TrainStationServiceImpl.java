@@ -27,18 +27,6 @@ public class TrainStationServiceImpl implements TrainStationService {
 	}
 
 	@Override
-	public TrainStation getOneTrainStationByName(String name) {
-
-		List<TrainStation> trainStations = repository.findAll();
-
-		for (TrainStation trainStation : trainStations) {
-			if (trainStation.getName().equalsIgnoreCase(name))
-				return trainStation;
-		}
-		return null;
-	}
-
-	@Override
 	public TrainStation getTrainStationById(int trainStationId) {
 		List<TrainStation> trainStations = repository.findAll();
 		for (TrainStation trainStation : trainStations) {
