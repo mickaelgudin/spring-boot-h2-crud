@@ -1,7 +1,10 @@
 package com.spring.crud.demo.utils;
 
+import com.spring.crud.demo.model.Journey;
 import com.spring.crud.demo.model.LineTrainStation;
 import com.spring.crud.demo.model.TrainStation;
+
+import java.time.LocalDateTime;
 
 /**
  * Class to init original data 
@@ -30,7 +33,31 @@ public class DataFactory {
     public TrainStation getTrainStationLaDefense() {
     	return new TrainStation("Gare de la Défense (Grande Arche)", 2.239209, 48.891731);
     }
-    
+
+    public Journey getJourney10() {
+        return new Journey(getTrainStationVersaillesChantiers(), getTrainStationMontparnasse(), LocalDateTime.now(), LocalDateTime.now(), 10);
+    }
+
+    public Journey getJourney20() {
+        return new Journey(getTrainStationVersaillesChantiers(), getTrainStationMontparnasse(), LocalDateTime.now(), LocalDateTime.now(), 20);
+    }
+
+    public Journey getJourney30() {
+        return new Journey(getTrainStationVersaillesChantiers(), getTrainStationMontparnasse(), LocalDateTime.now(), LocalDateTime.now(), 30);
+    }
+
+    public Journey getJourney40() {
+        return new Journey(getTrainStationVersaillesChantiers(), getTrainStationMontparnasse(), LocalDateTime.now(), LocalDateTime.now(), 40);
+    }
+
+    public Journey getJourney50() {
+        return new Journey(getTrainStationVersaillesChantiers(), getTrainStationMontparnasse(), LocalDateTime.now(), LocalDateTime.now(), 50);
+    }
+
+    public LineTrainStation getLineVersaillesToMontparnasse() {
+        return new LineTrainStation("VersaillesToMontparnasse");
+    }
+
     public LineTrainStation getLineN() {
     	return new LineTrainStation("N");
     }

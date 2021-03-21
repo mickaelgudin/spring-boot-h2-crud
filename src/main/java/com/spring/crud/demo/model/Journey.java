@@ -25,9 +25,11 @@ public class Journey {
 	@ManyToOne
 	@MapsId("id")
 	@JoinColumn(name = "arrival_station_id")
-	private LineTrainStation arrivalStation;
+	private TrainStation arrivalStation;
 
-	private LocalDateTime date;
+	private LocalDateTime departureDate;
+
+	private LocalDateTime arrivalDate;
 
 	private double farePrice = 0;
 
@@ -35,21 +37,13 @@ public class Journey {
 		super();
 	}
 
-	public Journey(TrainStation departureStation, LineTrainStation arrivalStation, LocalDateTime date,
-			double farePrice) {
+	public Journey(TrainStation departureStation, TrainStation arrivalStation, LocalDateTime departureDate, LocalDateTime arrivalDate, double farePrice) {
 		super();
 		this.departureStation = departureStation;
 		this.arrivalStation = arrivalStation;
-		this.date = date;
+		this.departureDate = departureDate;
+		this.arrivalDate = arrivalDate;
 		this.farePrice = farePrice;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public TrainStation getDepartureStation() {
@@ -60,11 +54,11 @@ public class Journey {
 		this.departureStation = departureStation;
 	}
 
-	public LineTrainStation getArrivalStation() {
+	public TrainStation getArrivalStation() {
 		return arrivalStation;
 	}
 
-	public void setArrivalStation(LineTrainStation arrivalStation) {
+	public void setArrivalStation(TrainStation arrivalStation) {
 		this.arrivalStation = arrivalStation;
 	}
 
@@ -76,12 +70,20 @@ public class Journey {
 		this.farePrice = farePrice;
 	}
 
-	public LocalDateTime getDate() {
-		return date;
+	public LocalDateTime getDepartureDate() {
+		return departureDate;
 	}
 
-	public void setDate(LocalDateTime date) {
-		this.date = date;
+	public void setDepartureDate(LocalDateTime departureDate) {
+		this.departureDate = departureDate;
+	}
+
+	public LocalDateTime getArrivalDate() {
+		return arrivalDate;
+	}
+
+	public void setArrivalDate(LocalDateTime arrivalDate) {
+		this.arrivalDate = arrivalDate;
 	}
 
 }
