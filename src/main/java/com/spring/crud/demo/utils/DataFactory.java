@@ -34,32 +34,16 @@ public class DataFactory {
     	return new TrainStation("Gare de la Défense (Grande Arche)", 2.239209, 48.891731);
     }
 
-    public Journey getJourney10() {
-        return new Journey(getTrainStationVersaillesChantiers(), getTrainStationMontparnasse(), LocalDateTime.now(), LocalDateTime.now(), 10);
+    public Journey getJourneyWithPrice(TrainStation depart, TrainStation arrivee, LocalDateTime startDate, double farePrice) {
+    	return new Journey(depart, arrivee, startDate, startDate.plusMinutes(20), farePrice);
     }
-
-    public Journey getJourney20() {
-        return new Journey(getTrainStationVersaillesChantiers(), getTrainStationMontparnasse(), LocalDateTime.now(), LocalDateTime.now(), 20);
-    }
-
-    public Journey getJourney30() {
-        return new Journey(getTrainStationVersaillesChantiers(), getTrainStationMontparnasse(), LocalDateTime.now(), LocalDateTime.now(), 30);
-    }
-
-    public Journey getJourney40() {
-        return new Journey(getTrainStationVersaillesChantiers(), getTrainStationMontparnasse(), LocalDateTime.now(), LocalDateTime.now(), 40);
-    }
-
-    public Journey getJourney50() {
-        return new Journey(getTrainStationVersaillesChantiers(), getTrainStationMontparnasse(), LocalDateTime.now(), LocalDateTime.now(), 50);
-    }
-
+    
     public LineTrainStation getLineVersaillesToMontparnasse() {
         return new LineTrainStation("VersaillesToMontparnasse");
     }
 
-    public LineTrainStation getLineN() {
-    	return new LineTrainStation("N");
+    public LineTrainStation getLineWithGivenName(String name) {
+    	return new LineTrainStation(name);
     }
     
     public void setLineforTrainStation(LineTrainStation line, TrainStation station) {

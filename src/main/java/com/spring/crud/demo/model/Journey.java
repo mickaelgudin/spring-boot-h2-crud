@@ -1,14 +1,15 @@
 package com.spring.crud.demo.model;
 
 import java.time.LocalDateTime;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.Table;
+
+import com.spring.crud.demo.utils.HelperUtil;
 
 @Entity
 @Table
@@ -18,13 +19,9 @@ public class Journey {
 	private int id;
 
 	@ManyToOne
-	@MapsId("id")
-	@JoinColumn(name = "departure_station_id")
 	private TrainStation departureStation;
 
 	@ManyToOne
-	@MapsId("id")
-	@JoinColumn(name = "arrival_station_id")
 	private TrainStation arrivalStation;
 
 	private LocalDateTime departureDate;
@@ -37,12 +34,13 @@ public class Journey {
 		super();
 	}
 
-	public Journey(TrainStation departureStation, TrainStation arrivalStation, LocalDateTime departureDate, LocalDateTime arrivalDate, double farePrice) {
+	public Journey(TrainStation departureStation, TrainStation arrivalStation, LocalDateTime departureDate,
+			LocalDateTime arrivalDate, double farePrice) {
 		super();
 		this.departureStation = departureStation;
 		this.arrivalStation = arrivalStation;
-		this.departureDate = departureDate;
-		this.arrivalDate = arrivalDate;
+		this.departureDate = HelperUtil.getFormattedDate(departureDate);
+		this.arrivalDate = HelperUtil.getFormattedDate(arrivalDate);
 		this.farePrice = farePrice;
 	}
 

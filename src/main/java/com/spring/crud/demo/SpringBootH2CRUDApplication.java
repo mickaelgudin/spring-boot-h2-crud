@@ -1,6 +1,8 @@
 package com.spring.crud.demo;
 
+import com.spring.crud.demo.model.Journey;
 import com.spring.crud.demo.model.TrainStation;
+import com.spring.crud.demo.repository.JourneyRepository;
 import com.spring.crud.demo.repository.LineTrainStationRepository;
 import com.spring.crud.demo.repository.TrainStationRepository;
 import com.spring.crud.demo.utils.HelperUtil;
@@ -13,6 +15,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 
 @Slf4j
@@ -28,7 +33,8 @@ public class SpringBootH2CRUDApplication {
 
 	@Autowired
 	private TrainStationRepository trainStationRepository;
-	
+	@Autowired
+	private JourneyRepository journeyRepository;
 	
 	@Bean
 	CommandLineRunner runner() {
@@ -36,7 +42,20 @@ public class SpringBootH2CRUDApplication {
 			List<TrainStation> stations = trainStationRepository.findAll();
 			if (stations.isEmpty()) {
 				HelperUtil helper = new HelperUtil();
-				trainStationRepository.saveAll(helper.getTrainsStations());
+				stations.addAll(trainStationRepository.saveAll(helper.getTrainsStations()));
+			}
+			
+			List<Journey> journeys = journeyRepository.findAll();
+			if(journeys.isEmpty()) {
+				HelperUtil helper = new HelperUtil();
+				TrainStation versailles = stations.get(0);
+				TrainStation montparnasse = stations.get(1);
+				TrainStation laDefense = stations.get(2);
+				
+				journeys.addAll(helper.getJourneysWithIncreasingPrice(versailles, montparnasse) );
+				journeys.addAll(helper.getJourneysWithDecreasingPrice(versailles, laDefense));
+				
+				journeyRepository.saveAll(journeys);
 			}
 		};
 	}

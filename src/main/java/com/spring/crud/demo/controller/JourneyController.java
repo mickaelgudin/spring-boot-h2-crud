@@ -20,6 +20,11 @@ public class JourneyController {
         return journeyService.getAll();
     }
 
+    @GetMapping("/tendancy")
+    public String getTendancy(@RequestParam(name = "id-from") int idFrom, @RequestParam(name = "id-to") int idTo) {
+        return journeyService.getTendancy(idFrom, idTo);
+    }
+    
     @PostMapping
     public ResponseEntity<?> save(@RequestBody Journey journey) {
         Journey savedTrainStation = journeyService.save(journey);
