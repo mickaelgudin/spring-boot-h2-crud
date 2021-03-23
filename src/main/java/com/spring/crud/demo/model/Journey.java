@@ -24,6 +24,9 @@ public class Journey {
 	@ManyToOne
 	private TrainStation arrivalStation;
 
+	@ManyToOne
+	private LineTrainStation line;
+
 	private LocalDateTime departureDate;
 
 	private LocalDateTime arrivalDate;
@@ -35,13 +38,14 @@ public class Journey {
 	}
 
 	public Journey(TrainStation departureStation, TrainStation arrivalStation, LocalDateTime departureDate,
-			LocalDateTime arrivalDate, double farePrice) {
+			LocalDateTime arrivalDate, double farePrice, LineTrainStation line) {
 		super();
 		this.departureStation = departureStation;
 		this.arrivalStation = arrivalStation;
 		this.departureDate = HelperUtil.getFormattedDate(departureDate);
 		this.arrivalDate = HelperUtil.getFormattedDate(arrivalDate);
 		this.farePrice = farePrice;
+		this.line = line;
 	}
 
 	public TrainStation getDepartureStation() {
@@ -82,6 +86,22 @@ public class Journey {
 
 	public void setArrivalDate(LocalDateTime arrivalDate) {
 		this.arrivalDate = arrivalDate;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public LineTrainStation getLine() {
+		return line;
+	}
+
+	public void setLine(LineTrainStation line) {
+		this.line = line;
 	}
 
 }

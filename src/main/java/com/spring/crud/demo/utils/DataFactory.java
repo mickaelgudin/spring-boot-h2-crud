@@ -34,8 +34,8 @@ public class DataFactory {
     	return new TrainStation("Gare de la Défense (Grande Arche)", 2.239209, 48.891731);
     }
 
-    public Journey getJourneyWithPrice(TrainStation depart, TrainStation arrivee, LocalDateTime startDate, double farePrice) {
-    	return new Journey(depart, arrivee, startDate, startDate.plusMinutes(20), farePrice);
+    public Journey getJourneyWithPrice(TrainStation depart, TrainStation arrivee, LocalDateTime startDate, double farePrice, LineTrainStation line) {
+    	return new Journey(depart, arrivee, startDate, startDate.plusMinutes(20), farePrice, line);
     }
     
     public LineTrainStation getLineVersaillesToMontparnasse() {

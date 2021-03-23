@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface JourneyService {
 
-    List<Journey> getAll();
-
     String getTendancy(int stationDepart, int stationArrival);
     
     Journey save(Journey journey);
+
+	List<Journey> getAllWithGivenStations(int idDepartStation, int idArrivalStation);
 }

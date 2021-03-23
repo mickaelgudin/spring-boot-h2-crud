@@ -16,8 +16,8 @@ public class JourneyController {
     private JourneyService journeyService;
 
     @GetMapping
-    public List<Journey> getAll() {
-        return journeyService.getAll();
+    public List<Journey> getAllJourneyWithStations(@RequestParam(name = "id-from") int idFrom, @RequestParam(name = "id-to") int idTo) {
+        return journeyService.getAllWithGivenStations(idFrom, idTo);
     }
 
     @GetMapping("/tendancy")

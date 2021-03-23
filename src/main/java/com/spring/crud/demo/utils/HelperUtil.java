@@ -47,21 +47,21 @@ public class HelperUtil {
 	 * @param arrivee
 	 * @return
 	 */
-	public List<Journey> getJourneysWithIncreasingPrice(TrainStation depart, TrainStation arrivee) {
+	public List<Journey> getJourneysWithIncreasingPrice(TrainStation depart, TrainStation arrivee, LineTrainStation line) {
 		List<Journey> journeysWithIncreasingPrice = new ArrayList<>();
 
 		for(int price=10; price<50; price=price+10) {
 			int day = price /10; //setting prices for last 2-5 days
 			
 			journeysWithIncreasingPrice
-				.add(df.getJourneyWithPrice(depart, arrivee, LocalDateTime.now().minusDays(day), price ) );
+				.add(df.getJourneyWithPrice(depart, arrivee, LocalDateTime.now().minusDays(day), price, line) );
 		}
 
 		LocalDateTime now = LocalDateTime.now();
 		// get schedule for today from 8am to 9pm
 		for (int hour = 8; hour < 20; hour++) {
 			Journey newJourney = df.getJourneyWithPrice(depart, arrivee,
-					LocalDateTime.of(now.getYear(), now.getMonth(), now.getDayOfMonth(), hour, 0), 50);
+					LocalDateTime.of(now.getYear(), now.getMonth(), now.getDayOfMonth(), hour, 0), 50, line);
 			journeysWithIncreasingPrice.add(newJourney);
 		}
 
@@ -75,21 +75,21 @@ public class HelperUtil {
 	 * @param arrivee
 	 * @return
 	 */
-	public List<Journey> getJourneysWithDecreasingPrice(TrainStation depart, TrainStation arrivee) {
+	public List<Journey> getJourneysWithDecreasingPrice(TrainStation depart, TrainStation arrivee, LineTrainStation line) {
 		List<Journey> journeysWithDecreasingPrice = new ArrayList<>();
 
 		for(int price=50; price > 10; price=price-10) {
 			int day = price /10; //setting prices for last 2-5 days
 			
 			journeysWithDecreasingPrice
-				.add(df.getJourneyWithPrice(depart, arrivee, LocalDateTime.now().minusDays(day), price));
+				.add(df.getJourneyWithPrice(depart, arrivee, LocalDateTime.now().minusDays(day), price, line));
 		}
 		
 		LocalDateTime now = LocalDateTime.now();
 		// get schedule for today from 8am to 9pm
 		for (int hour = 8; hour < 20; hour++) {
 			Journey newJourney = df.getJourneyWithPrice(depart, arrivee,
-					LocalDateTime.of(now.getYear(), now.getMonth(), now.getDayOfMonth(), hour, 0), 10);
+					LocalDateTime.of(now.getYear(), now.getMonth(), now.getDayOfMonth(), hour, 0), 10, line);
 			journeysWithDecreasingPrice.add(newJourney);
 		}
 

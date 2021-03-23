@@ -42,7 +42,8 @@ public class SpringBootH2CRUDApplication {
 			List<TrainStation> stations = trainStationRepository.findAll();
 			if (stations.isEmpty()) {
 				HelperUtil helper = new HelperUtil();
-				stations.addAll(trainStationRepository.saveAll(helper.getTrainsStations()));
+				List<TrainStation> insertedStations = trainStationRepository.saveAll(helper.getTrainsStations() );
+				stations.addAll(insertedStations);
 			}
 			
 			List<Journey> journeys = journeyRepository.findAll();
@@ -52,8 +53,8 @@ public class SpringBootH2CRUDApplication {
 				TrainStation montparnasse = stations.get(1);
 				TrainStation laDefense = stations.get(2);
 				
-				journeys.addAll(helper.getJourneysWithIncreasingPrice(versailles, montparnasse) );
-				journeys.addAll(helper.getJourneysWithDecreasingPrice(versailles, laDefense));
+				journeys.addAll(helper.getJourneysWithIncreasingPrice(versailles, montparnasse,  montparnasse.getLines().get(0)) );
+				journeys.addAll(helper.getJourneysWithDecreasingPrice(versailles, laDefense, laDefense.getLines().get(0)) );
 				
 				journeyRepository.saveAll(journeys);
 			}

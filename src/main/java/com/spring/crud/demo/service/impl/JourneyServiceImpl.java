@@ -18,11 +18,10 @@ public class JourneyServiceImpl implements JourneyService {
 	private JourneyRepository repository;
 	@Autowired
 	private TrainStationRepository repositoryStation;
-	
-	
+
 	@Override
-	public List<Journey> getAll() {
-		return repository.findAll();
+	public List<Journey> getAllWithGivenStations(int idDepartStation, int idArrivalStation) {
+		return repository.getJourneysOfDestination(idDepartStation, idDepartStation);
 	}
 
 	@Override
@@ -31,29 +30,34 @@ public class JourneyServiceImpl implements JourneyService {
 	}
 
 	private TrainStation checkIfStationExist(int idStation) {
-		Optional<TrainStation> stationOptionnal= repositoryStation.findById(idStation);
-		if(stationOptionnal.isPresent() ) {
+		Optional<TrainStation> stationOptionnal = repositoryStation.findById(idStation);
+		if (stationOptionnal.isPresent()) {
 			return stationOptionnal.get();
-		} 
-		
+		}
+
 		return null;
 	}
-	
+
 	@Override
 	public String getTendancy(int idStationDepart, int idStationArrival) {
 		TrainStation departStation = checkIfStationExist(idStationDepart);
-		if(departStation == null) return "departure station doesn't exist";
-		
+		if (departStation == null)
+			return "departure station doesn't exist";
+
 		TrainStation arrivalStation = checkIfStationExist(idStationArrival);
-		if(arrivalStation == null)	return "arrival station doesn't exist";
-		
-		
-		List<Journey> filteredJourneys = repository.getJourneysOfDestination(departStation, arrivalStation);
-		if(filteredJourneys.isEmpty()) {
+		if (arrivalStation == null)
+			return "arrival station doesn't exist";
+
+		List<Journey> filteredJourneys = repository.getJourneysOfDestination(idStationDepart, idStationArrival);
+		if (filteredJourneys.isEmpty()) {
 			return "no data yet";
 		}
-		
-		//defining a precise tendancy if the given journey has at least 2 records
+
+		return determineTendancy(filteredJourneys);
+	}
+
+	private String determineTendancy(List<Journey> filteredJourneys) {
+		// defining a precise tendancy if the given journey has at least 2 records
 		if (filteredJourneys.size() >= 2) {
 			Journey firstJourney = filteredJourneys.get(0);
 			Journey lastJourney = filteredJourneys.get(filteredJourneys.size() - 1);

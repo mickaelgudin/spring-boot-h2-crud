@@ -7,7 +7,4 @@ import java.util.List;
 
 public interface TrainStationRepository extends JpaRepository<TrainStation, Integer> {
 
-    TrainStation findByName(String name);
-
-
 }
