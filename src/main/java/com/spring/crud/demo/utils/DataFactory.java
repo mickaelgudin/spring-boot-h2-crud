@@ -1,7 +1,10 @@
 package com.spring.crud.demo.utils;
 
+import com.spring.crud.demo.model.Journey;
 import com.spring.crud.demo.model.LineTrainStation;
 import com.spring.crud.demo.model.TrainStation;
+
+import java.time.LocalDateTime;
 
 /**
  * Class to init original data 
@@ -30,9 +33,17 @@ public class DataFactory {
     public TrainStation getTrainStationLaDefense() {
     	return new TrainStation("Gare de la Défense (Grande Arche)", 2.239209, 48.891731);
     }
+
+    public Journey getJourneyWithPrice(TrainStation depart, TrainStation arrivee, LocalDateTime startDate, double farePrice, LineTrainStation line) {
+    	return new Journey(depart, arrivee, startDate, startDate.plusMinutes(20), farePrice, line);
+    }
     
-    public LineTrainStation getLineN() {
-    	return new LineTrainStation("N");
+    public LineTrainStation getLineVersaillesToMontparnasse() {
+        return new LineTrainStation("VersaillesToMontparnasse");
+    }
+
+    public LineTrainStation getLineWithGivenName(String name) {
+    	return new LineTrainStation(name);
     }
     
     public void setLineforTrainStation(LineTrainStation line, TrainStation station) {

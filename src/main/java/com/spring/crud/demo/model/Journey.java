@@ -1,14 +1,15 @@
 package com.spring.crud.demo.model;
 
 import java.time.LocalDateTime;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.Table;
+
+import com.spring.crud.demo.utils.HelperUtil;
 
 @Entity
 @Table
@@ -18,16 +19,17 @@ public class Journey {
 	private int id;
 
 	@ManyToOne
-	@MapsId("id")
-	@JoinColumn(name = "departure_station_id")
 	private TrainStation departureStation;
 
 	@ManyToOne
-	@MapsId("id")
-	@JoinColumn(name = "arrival_station_id")
-	private LineTrainStation arrivalStation;
+	private TrainStation arrivalStation;
 
-	private LocalDateTime date;
+	@ManyToOne
+	private LineTrainStation line;
+
+	private LocalDateTime departureDate;
+
+	private LocalDateTime arrivalDate;
 
 	private double farePrice = 0;
 
@@ -35,21 +37,15 @@ public class Journey {
 		super();
 	}
 
-	public Journey(TrainStation departureStation, LineTrainStation arrivalStation, LocalDateTime date,
-			double farePrice) {
+	public Journey(TrainStation departureStation, TrainStation arrivalStation, LocalDateTime departureDate,
+			LocalDateTime arrivalDate, double farePrice, LineTrainStation line) {
 		super();
 		this.departureStation = departureStation;
 		this.arrivalStation = arrivalStation;
-		this.date = date;
+		this.departureDate = HelperUtil.getFormattedDate(departureDate);
+		this.arrivalDate = HelperUtil.getFormattedDate(arrivalDate);
 		this.farePrice = farePrice;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
+		this.line = line;
 	}
 
 	public TrainStation getDepartureStation() {
@@ -60,11 +56,11 @@ public class Journey {
 		this.departureStation = departureStation;
 	}
 
-	public LineTrainStation getArrivalStation() {
+	public TrainStation getArrivalStation() {
 		return arrivalStation;
 	}
 
-	public void setArrivalStation(LineTrainStation arrivalStation) {
+	public void setArrivalStation(TrainStation arrivalStation) {
 		this.arrivalStation = arrivalStation;
 	}
 
@@ -76,12 +72,36 @@ public class Journey {
 		this.farePrice = farePrice;
 	}
 
-	public LocalDateTime getDate() {
-		return date;
+	public LocalDateTime getDepartureDate() {
+		return departureDate;
 	}
 
-	public void setDate(LocalDateTime date) {
-		this.date = date;
+	public void setDepartureDate(LocalDateTime departureDate) {
+		this.departureDate = departureDate;
+	}
+
+	public LocalDateTime getArrivalDate() {
+		return arrivalDate;
+	}
+
+	public void setArrivalDate(LocalDateTime arrivalDate) {
+		this.arrivalDate = arrivalDate;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public LineTrainStation getLine() {
+		return line;
+	}
+
+	public void setLine(LineTrainStation line) {
+		this.line = line;
 	}
 
 }
