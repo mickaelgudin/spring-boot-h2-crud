@@ -21,7 +21,9 @@ public class JourneyServiceImpl implements JourneyService {
 
 	@Override
 	public List<Journey> getAllWithGivenStations(int idDepartStation, int idArrivalStation) {
-		return repository.getJourneysOfDestination(idDepartStation, idDepartStation);
+		List<Journey> journeys = repository.getJourneysOfDestination(idDepartStation, idArrivalStation);
+		
+		return journeys;
 	}
 
 	@Override
