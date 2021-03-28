@@ -1,5 +1,6 @@
 package com.spring.crud.demo;
 
+import com.spring.crud.demo.config.LanguageManager;
 import com.spring.crud.demo.model.Journey;
 import com.spring.crud.demo.model.TrainStation;
 import com.spring.crud.demo.repository.JourneyRepository;
@@ -29,6 +30,7 @@ public class SpringBootH2CRUDApplication {
 	
 
 	public static void main(String[] args) {
+		LanguageManager.get();
 		SpringApplication.run(SpringBootH2CRUDApplication.class, args);
 	}
 	

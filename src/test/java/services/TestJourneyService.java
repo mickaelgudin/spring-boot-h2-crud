@@ -54,9 +54,9 @@ public class TestJourneyService {
 
 		String tendancyPrice = serviceJourney.getTendancy(trainStationDepartId, trainStationArrivalId);
 		
-		String decreasing = LanguageManager.languageSelected.getString("tendancy.decreasing");
-		String increasing = LanguageManager.languageSelected.getString("tendancy.decreasing");
-		String stable = LanguageManager.languageSelected.getString("tendancy.stable");
+		String decreasing = LanguageManager.get().getString("tendancy.decreasing");
+		String increasing = LanguageManager.get().getString("tendancy.decreasing");
+		String stable = LanguageManager.get().getString("tendancy.stable");
 		
 		//in original data there are journey for all stations - so there is a tendancy (stable, incresing, decreasing)
 		assertTrue(tendancyPrice.equals(stable) || tendancyPrice.equals(increasing) || tendancyPrice.equals(decreasing));

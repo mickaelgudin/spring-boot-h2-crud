@@ -60,7 +60,7 @@ public class TrainStationServiceImpl implements TrainStationService {
 		
 		//throw error if none of the following fields were modified : name, longitude, latitude
 		if( !hasToBeUpdated) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, LanguageManager.languageSelected.getString("station.notupdatable"));
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, LanguageManager.get().getString("station.notupdatable"));
 		}
 		
 		

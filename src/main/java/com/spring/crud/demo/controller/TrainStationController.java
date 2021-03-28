@@ -60,7 +60,7 @@ public class TrainStationController {
 		
 		journeyRepository.deleteJourneysOfStation(id);
 		trainStationService.delete(id);
-        return ResponseEntity.ok().body(LanguageManager.languageSelected.getString("station.deleted"));
+        return ResponseEntity.ok().body(LanguageManager.get().getString("station.deleted"));
     }
 	
 	public void checkBothStationError(int idFrom, int idTo) {
@@ -88,7 +88,7 @@ public class TrainStationController {
 		String errorMessage = null;
 
 		if (station == null)
-			errorMessage = LanguageManager.languageSelected.getString("station." + typeStation + ".dontexist");
+			errorMessage = LanguageManager.get().getString("station." + typeStation + ".dontexist");
 
 		return errorMessage;
 	}

@@ -39,7 +39,7 @@ public class JourneyServiceImpl implements JourneyService {
 	public String getTendancy(int idStationDepart, int idStationArrival) {
 		List<Journey> filteredJourneys = repository.getJourneysOfDestinations(idStationDepart, idStationArrival);
 		if (filteredJourneys.isEmpty()) {
-			return LanguageManager.languageSelected.getString("journey.nodata");
+			return LanguageManager.get().getString("journey.nodata");
 		}
 
 		return determineTendancy(filteredJourneys);
@@ -54,13 +54,13 @@ public class JourneyServiceImpl implements JourneyService {
 			double balance = lastJourney.getFarePrice() - firstJourney.getFarePrice();
 
 			if (balance < 0)
-				return LanguageManager.languageSelected.getString("tendancy.decreasing");
+				return LanguageManager.get().getString("tendancy.decreasing");
 
 			else if (balance > 0)
-				return LanguageManager.languageSelected.getString("tendancy.increasing");
+				return LanguageManager.get().getString("tendancy.increasing");
 		}
 
-		return LanguageManager.languageSelected.getString("tendancy.stable");
+		return LanguageManager.get().getString("tendancy.stable");
 	}
 
 	@Override
