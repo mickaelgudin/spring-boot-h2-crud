@@ -5,5 +5,5 @@ import java.util.ResourceBundle;
 
 public class LanguageManager {
 	public static ResourceBundle languageSelected = 
-			   ResourceBundle.getBundle("com.spring.crud.demo.config.language", Locale.FRENCH) ;
+			   ResourceBundle.getBundle(LanguageManager.class.getPackageName()+".language", Locale.FRENCH) ;
 }

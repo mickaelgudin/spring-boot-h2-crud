@@ -11,8 +11,11 @@ public class TrainStation implements Serializable {
 	@Id
 	@GeneratedValue
 	private int trainStationId;
+	@Column(nullable = false)
 	private String name;
+	@Column(nullable = false)
 	private Double longitude;
+	@Column(nullable = false)
 	private Double latitude;
 	@ManyToMany(cascade = CascadeType.PERSIST)
 	@JoinTable(name = "stations_lines", joinColumns = @JoinColumn(name = "trainStationId"), inverseJoinColumns = @JoinColumn(name = "lineId"))

@@ -34,25 +34,9 @@ public class JourneyServiceImpl implements JourneyService {
 		return repository.save(journey);
 	}
 
-	public TrainStation checkIfStationExist(int idStation) {
-		Optional<TrainStation> stationOptionnal = repositoryStation.findById(idStation);
-		if (stationOptionnal.isPresent()) {
-			return stationOptionnal.get();
-		}
-
-		return null;
-	}
 
 	@Override
 	public String getTendancy(int idStationDepart, int idStationArrival) {
-		TrainStation departStation = checkIfStationExist(idStationDepart);
-		if (departStation == null)
-			return LanguageManager.languageSelected.getString("station.departure.dontexist");
-
-		TrainStation arrivalStation = checkIfStationExist(idStationArrival);
-		if (arrivalStation == null)
-			return LanguageManager.languageSelected.getString("station.arrival.dontexist");
-
 		List<Journey> filteredJourneys = repository.getJourneysOfDestinations(idStationDepart, idStationArrival);
 		if (filteredJourneys.isEmpty()) {
 			return LanguageManager.languageSelected.getString("journey.nodata");

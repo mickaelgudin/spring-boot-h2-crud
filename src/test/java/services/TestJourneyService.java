@@ -42,7 +42,7 @@ public class TestJourneyService {
 
 		Map<String, Double> avgPricesForStation = serviceJourney.getJourneysAverageByStation(trainStationDepartId);
 		
-		//in original data there are journey for all stations so the map returned by the service can't be empty
+		//in original data there are journeys for all stations so the map returned by the service can't be empty
 		assertFalse(avgPricesForStation.isEmpty());
 	}
 	
@@ -60,12 +60,5 @@ public class TestJourneyService {
 		
 		//in original data there are journey for all stations - so there is a tendancy (stable, incresing, decreasing)
 		assertTrue(tendancyPrice.equals(stable) || tendancyPrice.equals(increasing) || tendancyPrice.equals(decreasing));
-		
-		
-		//check if error are returned if false stations are given in parameters of getTendancy
-		tendancyPrice = serviceJourney.getTendancy(100000, trainStationArrivalId);
-		assertTrue(tendancyPrice.equals(LanguageManager.languageSelected.getString("station.departure.dontexist")) );
-		tendancyPrice = serviceJourney.getTendancy(trainStationDepartId, 100000);
-		assertTrue(tendancyPrice.equals(LanguageManager.languageSelected.getString("station.arrival.dontexist")) );
 	}
 }

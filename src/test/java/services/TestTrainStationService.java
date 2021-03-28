@@ -42,8 +42,6 @@ public class TestTrainStationService {
 		TrainStation updatedStation = stationService.update(lastStation.getTrainStationId(), lastStation);
 		assertEquals("testUpdate", updatedStation.getName());
 
-		// trying to update non existing station - should return null
-		assertNull(stationService.update(15550, new TrainStation()));
 	}
 
 	@Test

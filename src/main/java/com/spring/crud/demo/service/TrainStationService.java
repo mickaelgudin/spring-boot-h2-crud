@@ -14,4 +14,6 @@ public interface TrainStationService {
 	TrainStation update(int id, TrainStation trainStation);
 
     void delete(int id);
+    
+    TrainStation checkIfStationExist(int idStation);
 }
