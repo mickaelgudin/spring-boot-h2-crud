@@ -2,8 +2,14 @@ package services;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
+import java.util.PropertyResourceBundle;
+import java.util.ResourceBundle;
+
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +31,15 @@ public class TestJourneyService {
 	@Autowired
 	private TrainStationService serviceStation;
 
+	
+	@BeforeClass
+    public static void beforeClass() throws IOException {
+		InputStream contentStream = Thread.currentThread().getContextClassLoader()
+				.getResourceAsStream("language_fr.properties");
+	    ResourceBundle rb = new PropertyResourceBundle(contentStream);
+	    LanguageManager.set(rb);
+	}
+	
 	@Test
 	public void testGetAllWithGivenStations() {
 		List<TrainStation> stations = serviceStation.getAll();
