@@ -1,19 +1,18 @@
 package com.spring.crud.demo.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 import com.spring.crud.demo.utils.HelperUtil;
 
 @Entity
-@Table
-public class Journey {
+public class Journey implements Serializable{
 	@Id
 	@GeneratedValue
 	private int id;

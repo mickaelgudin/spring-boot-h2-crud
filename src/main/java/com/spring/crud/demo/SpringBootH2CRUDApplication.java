@@ -1,5 +1,6 @@
 package com.spring.crud.demo;
 
+import com.spring.crud.demo.config.LanguageManager;
 import com.spring.crud.demo.model.Journey;
 import com.spring.crud.demo.model.TrainStation;
 import com.spring.crud.demo.repository.JourneyRepository;
@@ -15,6 +16,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -24,18 +27,21 @@ import javax.persistence.PersistenceContext;
 @SpringBootApplication
 @EnableJpaRepositories
 public class SpringBootH2CRUDApplication {
+	
 
 	public static void main(String[] args) {
+		LanguageManager.get();
 		SpringApplication.run(SpringBootH2CRUDApplication.class, args);
 	}
-
-
+	
 
 	@Autowired
 	private TrainStationRepository trainStationRepository;
 	@Autowired
 	private JourneyRepository journeyRepository;
 	
+	
+	//inserting original data at system start
 	@Bean
 	CommandLineRunner runner() {
 		return args -> {
@@ -55,6 +61,8 @@ public class SpringBootH2CRUDApplication {
 				
 				journeys.addAll(helper.getJourneysWithIncreasingPrice(versailles, montparnasse,  montparnasse.getLines().get(0)) );
 				journeys.addAll(helper.getJourneysWithDecreasingPrice(versailles, laDefense, laDefense.getLines().get(0)) );
+				journeys.addAll(helper.getJourneysWithIncreasingPrice(montparnasse, versailles,  montparnasse.getLines().get(0)) );
+				journeys.addAll(helper.getJourneysWithStablePrice(laDefense, versailles, laDefense.getLines().get(0)) );
 				
 				journeyRepository.saveAll(journeys);
 			}

@@ -57,13 +57,8 @@ public class HelperUtil {
 				.add(df.getJourneyWithPrice(depart, arrivee, LocalDateTime.now().minusDays(day), price, line) );
 		}
 
-		LocalDateTime now = LocalDateTime.now();
-		// get schedule for today from 8am to 9pm
-		for (int hour = 8; hour < 20; hour++) {
-			Journey newJourney = df.getJourneyWithPrice(depart, arrivee,
-					LocalDateTime.of(now.getYear(), now.getMonth(), now.getDayOfMonth(), hour, 0), 50, line);
-			journeysWithIncreasingPrice.add(newJourney);
-		}
+		//we also want steady price at least for today
+		journeysWithIncreasingPrice.addAll(getJourneysWithStablePrice(depart, arrivee, line));
 
 		return journeysWithIncreasingPrice;
 	}
@@ -78,24 +73,47 @@ public class HelperUtil {
 	public List<Journey> getJourneysWithDecreasingPrice(TrainStation depart, TrainStation arrivee, LineTrainStation line) {
 		List<Journey> journeysWithDecreasingPrice = new ArrayList<>();
 
-		for(int price=50; price > 10; price=price-10) {
+		for(int price=80; price > 10; price=price-10) {
 			int day = price /10; //setting prices for last 2-5 days
 			
 			journeysWithDecreasingPrice
 				.add(df.getJourneyWithPrice(depart, arrivee, LocalDateTime.now().minusDays(day), price, line));
 		}
 		
-		LocalDateTime now = LocalDateTime.now();
-		// get schedule for today from 8am to 9pm
-		for (int hour = 8; hour < 20; hour++) {
-			Journey newJourney = df.getJourneyWithPrice(depart, arrivee,
-					LocalDateTime.of(now.getYear(), now.getMonth(), now.getDayOfMonth(), hour, 0), 10, line);
-			journeysWithDecreasingPrice.add(newJourney);
-		}
+		//we also want steady price at least for today
+		journeysWithDecreasingPrice.addAll(getJourneysWithStablePrice(depart, arrivee, line));
 
 		return journeysWithDecreasingPrice;
 	}
 
+	/**
+	 * journeys with stable prices
+	 * 
+	 * @param depart
+	 * @param arrivee
+	 * @param line
+	 * @return
+	 */
+	public List<Journey> getJourneysWithStablePrice(TrainStation depart, TrainStation arrivee, LineTrainStation line) {
+		List<Journey> journeysWithStablePrice = new ArrayList<>();
+
+		LocalDateTime now = LocalDateTime.now();
+		// get schedule for today from 8am to 9pm
+		for (int hour = 8; hour < 20; hour++) {
+			Journey newJourney = df.getJourneyWithPrice(depart, arrivee,
+					LocalDateTime.of(now.getYear(), now.getMonth(), now.getDayOfMonth(), hour, 0), 50, line);
+			journeysWithStablePrice.add(newJourney);
+		}
+
+		return journeysWithStablePrice;
+	}
+	
+	/**
+	 * format the given date with a certain pattern(for our dates stored in the database)
+	 * @param date
+	 * @see entities
+	 * @return formattedDate
+	 */
 	public static LocalDateTime getFormattedDate(LocalDateTime date) {
 		String pattern = "yyyy-MM-dd HH:mm:ss";
 		return LocalDateTime.parse(date.format(DateTimeFormatter.ofPattern(pattern)),
