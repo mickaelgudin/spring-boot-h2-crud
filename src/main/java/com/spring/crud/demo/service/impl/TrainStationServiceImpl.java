@@ -43,7 +43,7 @@ public class TrainStationServiceImpl implements TrainStationService {
 		boolean hasToBeUpdated = false;
 		
 		String newName = updatedStation.getName();
-		if(newName != null && !newName.isBlank() && !oldStation.getName().equals(newName) ) {
+		if(newName!= null && newName != "" && !oldStation.getName().equals(newName) ) {
 			hasToBeUpdated = true;
 			oldStation.setName(newName);
 		}
