@@ -1,15 +1,11 @@
 package com.spring.crud.demo.model;
 
-import lombok.Data;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
 @Entity
-@Table
 public class TrainStation implements Serializable {
 
 	@Id

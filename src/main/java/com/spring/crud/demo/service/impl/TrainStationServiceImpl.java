@@ -17,23 +17,10 @@ public class TrainStationServiceImpl implements TrainStationService {
 
 	@Autowired
 	private TrainStationRepository repository;
-	
-	@PersistenceContext
-	private EntityManager entityManger;
 
 	@Override
 	public List<TrainStation> getAll() {
 		return repository.findAll();
-	}
-
-	@Override
-	public TrainStation getTrainStationById(int trainStationId) {
-		List<TrainStation> trainStations = repository.findAll();
-		for (TrainStation trainStation : trainStations) {
-			if (trainStationId == trainStation.getTrainStationId())
-				return trainStation;
-		}
-		return null;
 	}
 
 	@Override

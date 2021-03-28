@@ -5,6 +5,7 @@ import com.spring.crud.demo.model.Journey;
 import com.spring.crud.demo.model.TrainStation;
 
 import java.util.List;
+import java.util.Map;
 
 public interface JourneyService {
 
@@ -13,4 +14,7 @@ public interface JourneyService {
     Journey save(Journey journey);
 
 	List<Journey> getAllWithGivenStations(int idDepartStation, int idArrivalStation);
+	
+	Map<String, Double> getJourneysAverageByStation(int idDepartStation);
+	
 }

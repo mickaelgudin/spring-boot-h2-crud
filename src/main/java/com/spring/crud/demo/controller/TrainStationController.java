@@ -1,8 +1,15 @@
 package com.spring.crud.demo.controller;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
+import javax.transaction.Transactional;
+
+import com.spring.crud.demo.config.LanguageManager;
 import com.spring.crud.demo.model.TrainStation;
+import com.spring.crud.demo.repository.JourneyRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,18 +22,14 @@ public class TrainStationController {
 	
 	@Autowired
 	private TrainStationService trainStationService;
+	
+	@Autowired
+	private JourneyRepository journeyRepository;
 
 	@GetMapping
 	public List<TrainStation> getAll() {
 		return trainStationService.getAll();
 	}
-	
-
-	@GetMapping("/{id}")
-	public TrainStation getStudentById(@PathVariable int id ) {
-		return trainStationService.getTrainStationById(id);
-	}
-	
 	
 	@PostMapping
     public ResponseEntity<?> save(@RequestBody TrainStation trainStation) {
@@ -41,8 +44,10 @@ public class TrainStationController {
     }
 	
 	@DeleteMapping("/{id}")
+	@Transactional
     public ResponseEntity<?> delete(@PathVariable int id) {
+		journeyRepository.deleteJourneysOfStation(id);
 		trainStationService.delete(id);
-        return ResponseEntity.ok().body("Deleted successfully");
+        return ResponseEntity.ok().body(LanguageManager.languageSelected.getString("station.deleted"));
     }
 }

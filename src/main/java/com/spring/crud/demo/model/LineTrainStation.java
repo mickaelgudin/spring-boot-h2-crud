@@ -13,9 +13,7 @@ import javax.persistence.Table;
 
 import lombok.Data;
 
-@Data
 @Entity
-@Table
 public class LineTrainStation implements Serializable {
 	@Id
 	@GeneratedValue

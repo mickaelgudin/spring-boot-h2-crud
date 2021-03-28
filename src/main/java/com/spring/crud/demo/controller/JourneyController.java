@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/journeys")
@@ -20,6 +21,11 @@ public class JourneyController {
         return journeyService.getAllWithGivenStations(idFrom, idTo);
     }
 
+    @GetMapping("/average")
+    public Map<String, Double> getJourneysAverageByStation(@RequestParam(name = "id-from") int idFrom) {
+    	return journeyService.getJourneysAverageByStation(idFrom);
+    }
+    
     @GetMapping("/tendancy")
     public String getTendancy(@RequestParam(name = "id-from") int idFrom, @RequestParam(name = "id-to") int idTo) {
         return journeyService.getTendancy(idFrom, idTo);
