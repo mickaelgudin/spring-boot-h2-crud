@@ -38,6 +38,7 @@ public class TestJourneyService {
 				.getResourceAsStream("language_fr.properties");
 	    ResourceBundle rb = new PropertyResourceBundle(contentStream);
 	    LanguageManager.set(rb);
+	    LanguageManager.testIsRunning = true;
 	}
 	
 	@Test
