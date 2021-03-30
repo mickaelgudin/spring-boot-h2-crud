@@ -10,6 +10,10 @@ import com.spring.crud.demo.model.Journey;
 import com.spring.crud.demo.model.LineTrainStation;
 import com.spring.crud.demo.model.TrainStation;
 
+/**
+ * Class for useful methods(get initial data, get formatted date)
+ * @author mickaelgudin
+ */
 public class HelperUtil {
 	DataFactory df = new DataFactory();
 

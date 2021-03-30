@@ -54,10 +54,10 @@ public class TestTrainStationService {
 	public void testUpdate() {
 		List<TrainStation> stations = stationService.getAll();
 		TrainStation lastStation = stations.get(stations.size() - 1);
-		lastStation.setName("testUpdate");
+		lastStation.setName("testUpdateTest");
 
 		TrainStation updatedStation = stationService.update(lastStation.getTrainStationId(), lastStation);
-		assertEquals("testUpdate", updatedStation.getName());
+		assertEquals("testUpdateTest", updatedStation.getName());
 
 	}
 

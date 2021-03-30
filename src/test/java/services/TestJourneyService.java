@@ -36,8 +36,8 @@ public class TestJourneyService {
     public static void beforeClass() throws IOException {
 		InputStream contentStream = Thread.currentThread().getContextClassLoader()
 				.getResourceAsStream("language_fr.properties");
-	    ResourceBundle rb = new PropertyResourceBundle(contentStream);
-	    LanguageManager.set(rb);
+	    ResourceBundle languagePropTest = new PropertyResourceBundle(contentStream);
+	    LanguageManager.set(languagePropTest);
 	    LanguageManager.testIsRunning = true;
 	}
 	
@@ -48,7 +48,7 @@ public class TestJourneyService {
 		int trainStationArrivalId = stations.get(2).getTrainStationId();
 
 		List<Journey> allJourneys = serviceJourney.getAllWithGivenStations(trainStationDepartId, trainStationArrivalId);
-		assertFalse(allJourneys.isEmpty());
+		assertFalse("journeys return by service not empty", allJourneys.isEmpty());
 	}
 	
 	@Test
@@ -58,8 +58,8 @@ public class TestJourneyService {
 
 		Map<String, Double> avgPricesForStation = serviceJourney.getJourneysAverageByStation(trainStationDepartId);
 		
-		//in original data there are journeys for all stations so the map returned by the service can't be empty
-		assertFalse(avgPricesForStation.isEmpty());
+		//in original data there are journeys for all stations
+		assertFalse("at least of avg prices was determine", avgPricesForStation.isEmpty());
 	}
 	
 	@Test
@@ -70,11 +70,8 @@ public class TestJourneyService {
 
 		String tendancyPrice = serviceJourney.getTendancy(trainStationDepartId, trainStationArrivalId);
 		
-		String decreasing = LanguageManager.get().getString("tendancy.decreasing");
-		String increasing = LanguageManager.get().getString("tendancy.decreasing");
-		String stable = LanguageManager.get().getString("tendancy.stable");
-		
 		//in original data there are journey for all stations - so there is a tendancy (stable, incresing, decreasing)
-		assertTrue(tendancyPrice.equals(stable) || tendancyPrice.equals(increasing) || tendancyPrice.equals(decreasing));
+		assertTrue("a tendancy was determine", tendancyPrice.equals("stable") || tendancyPrice.equals("up") || tendancyPrice.equals("down"));
+		
 	}
 }

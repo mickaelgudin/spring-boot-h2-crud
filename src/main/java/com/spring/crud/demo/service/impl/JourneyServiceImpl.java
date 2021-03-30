@@ -12,8 +12,17 @@ import com.spring.crud.demo.repository.JourneyRepository;
 import com.spring.crud.demo.repository.TrainStationRepository;
 import com.spring.crud.demo.service.JourneyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+
+/**
+ * service layer for journey containing all the business logic of journeys
+ * 
+ * @see JourneyService inherited java doc
+ * @author NicolasLewin
+ */
 @Service
 public class JourneyServiceImpl implements JourneyService {
 
@@ -38,13 +47,19 @@ public class JourneyServiceImpl implements JourneyService {
 	@Override
 	public String getTendancy(int idStationDepart, int idStationArrival) {
 		List<Journey> filteredJourneys = repository.getJourneysOfDestinations(idStationDepart, idStationArrival);
-		if (filteredJourneys.isEmpty()) {
-			return LanguageManager.get().getString("journey.nodata");
+		if (filteredJourneys == null || filteredJourneys.isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, LanguageManager.get().getString("journey.nodata"));
 		}
 
 		return determineTendancy(filteredJourneys);
 	}
 
+	/**
+	 * determine tendancy with soustraction of first and last journey
+	 * here there is hard coded text because we won't use them in the front end
+	 * @param filteredJourneys journeys of two train stations
+	 * @return tendancy of growth in the given journeys
+	 */
 	private String determineTendancy(List<Journey> filteredJourneys) {
 		// defining a precise tendancy if the given journey has at least 2 records
 		if (filteredJourneys.size() >= 2) {
@@ -54,22 +69,26 @@ public class JourneyServiceImpl implements JourneyService {
 			double balance = lastJourney.getFarePrice() - firstJourney.getFarePrice();
 
 			if (balance < 0)
-				return LanguageManager.get().getString("tendancy.decreasing");
+				return "down";
 
 			else if (balance > 0)
-				return LanguageManager.get().getString("tendancy.increasing");
+				return "up";
 		}
 
-		return LanguageManager.get().getString("tendancy.stable");
+		return "stable";
 	}
 
 	@Override
 	public Map<String, Double> getJourneysAverageByStation(int idDepartStation) {
 		List<Journey> journeysFromStation = repository.getJourneysAverageByStation(idDepartStation);
-
 		return this.computeAveragePricesByStation(journeysFromStation);
 	}
 
+	/**
+	 * determine the average fare price for all accessible destinations from of given station
+	 * @param journeysFromStation all journey of a station
+	 * @return a map with all the names of the accessible stations of arrival and their associated average fare price
+	 */
 	private Map<String, Double> computeAveragePricesByStation(List<Journey> journeysFromStation) {
 		Map<String, Double> avgPriceByArrivalStation = new TreeMap<String, Double>();
 		Map<String, Integer> occurencesByStationId = new TreeMap<String, Integer>();

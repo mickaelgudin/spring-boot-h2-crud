@@ -15,8 +15,16 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.spring.crud.demo.repository.TrainStationRepository;
+import com.spring.crud.demo.service.JourneyService;
 import com.spring.crud.demo.service.TrainStationService;
 
+
+/**
+ * service layer for train station containing all the business logic
+ * 
+ * @see JourneyService inherited java doc
+ * @author mickaelgudin
+ */
 @Service
 @Transactional
 public class TrainStationServiceImpl implements TrainStationService {
@@ -72,6 +80,7 @@ public class TrainStationServiceImpl implements TrainStationService {
 		repository.deleteById(id);
 	}
 	
+	@Override
 	public TrainStation checkIfStationExist(int idStation) {
 		Optional<TrainStation> stationOptionnal = repository.findById(idStation);
 		if (stationOptionnal.isPresent()) {

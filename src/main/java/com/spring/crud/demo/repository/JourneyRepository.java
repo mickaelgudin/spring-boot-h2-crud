@@ -9,6 +9,10 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+/**
+ * Repository for journey
+ * @author NicolasLewin
+ */
 public interface JourneyRepository extends JpaRepository<Journey, Integer> {
 	@Query("SELECT j FROM Journey j WHERE j.departureStation.trainStationId= :stationDepart AND j.arrivalStation.trainStationId= :stationArrival ORDER BY j.departureDate")
 	List<Journey> getJourneysOfDestinations(@Param("stationDepart") int stationDepart, @Param("stationArrival") int stationArrival);

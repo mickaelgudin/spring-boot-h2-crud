@@ -1,11 +1,25 @@
 package com.spring.crud.demo.config;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import com.spring.crud.demo.controller.LanguageController;
+
+/**
+ * Class that manage selected language, useful for the front end 
+ * when custom error are throwed by the back end(ex: if we try to update a non existing train station)
+ * so that the website has full multilanguage support
+ * 
+ * @author mickaelgudin
+ * @see LanguageController the rest controller unabling the front end to change back end language
+ */
 public class LanguageManager {
 	private static ResourceBundle languageSelected;
 	public static Locale languageCode = Locale.FRENCH;
+	public static List<Locale> allowedLanguage = new ArrayList<>(Arrays.asList(Locale.FRENCH, Locale.ENGLISH));
 	private static boolean languageHasChange = false;
 	public static boolean testIsRunning = false;
 	
@@ -28,7 +42,7 @@ public class LanguageManager {
 	}
 	
 	/**
-	 * useful for unit test
+	 * useful to change the properties file for unit test
 	 * @param rb
 	 */
 	public static void set(ResourceBundle rb) {
@@ -40,7 +54,9 @@ public class LanguageManager {
 	 * @param language
 	 */
 	public static void setLanguageCode(Locale language) {
-		languageHasChange = true;
-		languageCode = language;
+		if(allowedLanguage.contains(language)) {
+			languageHasChange = true;
+			languageCode = language;
+		}
 	}
 }

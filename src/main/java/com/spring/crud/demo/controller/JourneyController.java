@@ -13,6 +13,10 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/journeys")
+/**
+ * Rest controller for journeys
+ * @author MGud
+ */
 public class JourneyController {
 
 	@Autowired
@@ -45,11 +49,4 @@ public class JourneyController {
 
 		return journeyService.getTendancy(idFrom, idTo);
 	}
-
-	@PostMapping
-	public ResponseEntity<?> save(@RequestBody Journey journey) {
-		Journey savedTrainStation = journeyService.save(journey);
-		return ResponseEntity.ok().body(savedTrainStation);
-	}
-
 }

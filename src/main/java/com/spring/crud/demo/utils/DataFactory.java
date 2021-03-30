@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  * Calling Navitia Api from the back end to regenerate data 
  * would be time consuming
  * 
- * @author MGud
+ * @author mickaelgudin
  */
 public class DataFactory {
 	
