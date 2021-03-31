@@ -14,7 +14,7 @@ import java.util.Map;
 @RequestMapping("/journeys")
 /**
  * Rest controller for journeys
- * @author MGud
+ * @author NicolasLewin
  */
 public class JourneyController {
 

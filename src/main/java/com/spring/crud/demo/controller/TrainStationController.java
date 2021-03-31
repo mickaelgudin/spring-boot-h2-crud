@@ -20,7 +20,7 @@ import com.spring.crud.demo.service.TrainStationService;
 @RequestMapping("/train-stations")
 /**
  * Rest controller for train stations
- * @author MGud
+ * @author mickaelgudin
  */
 public class TrainStationController {
 
