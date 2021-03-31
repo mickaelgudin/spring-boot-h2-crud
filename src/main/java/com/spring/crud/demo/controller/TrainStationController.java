@@ -1,8 +1,6 @@
 package com.spring.crud.demo.controller;
 
 import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.transaction.Transactional;
 

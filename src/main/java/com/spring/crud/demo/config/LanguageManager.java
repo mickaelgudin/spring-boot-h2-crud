@@ -23,6 +23,10 @@ public class LanguageManager {
 	private static boolean languageHasChange = false;
 	public static boolean testIsRunning = false;
 	
+	private LanguageManager() {
+		
+	}
+	
 	/**
 	 * read bundle for selected language
 	 * (clearing cache to have up to date text from properties file without recompilation)
@@ -32,7 +36,7 @@ public class LanguageManager {
 		if(!testIsRunning) {
 			ResourceBundle.clearCache();
 			
-			if(languageSelected == null || languageHasChange == true) {
+			if(languageSelected == null || languageHasChange) {
 				languageHasChange = false;
 				return ResourceBundle.getBundle("language", languageCode);
 			} 

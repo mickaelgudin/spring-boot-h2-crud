@@ -4,14 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.Table;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class LineTrainStation implements Serializable {
@@ -20,7 +18,8 @@ public class LineTrainStation implements Serializable {
 	private int lineId;
 	private String name;
 	@ManyToMany(mappedBy = "lines")
-	private transient List<TrainStation> trainStations = new ArrayList<>();
+	@JsonIgnore
+	private List<TrainStation> trainStations = new ArrayList<>();
 
 	public LineTrainStation() {
 		super();

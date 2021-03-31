@@ -4,7 +4,6 @@ import com.spring.crud.demo.model.Journey;
 import com.spring.crud.demo.service.JourneyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -27,7 +26,7 @@ public class JourneyController {
 
 	@GetMapping
 	public List<Journey> getAllJourneyWithStations(@RequestParam(name = "id-from") int idFrom,
-			@RequestParam(name = "id-to") int idTo) throws Exception {
+			@RequestParam(name = "id-to") int idTo) throws ResponseStatusException {
 		stationController.checkBothStationError(idFrom, idTo);
 
 		return journeyService.getAllWithGivenStations(idFrom, idTo);

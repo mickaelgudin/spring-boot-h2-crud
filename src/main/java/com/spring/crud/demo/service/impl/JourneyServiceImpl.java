@@ -2,12 +2,10 @@ package com.spring.crud.demo.service.impl;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.TreeMap;
 
 import com.spring.crud.demo.config.LanguageManager;
 import com.spring.crud.demo.model.Journey;
-import com.spring.crud.demo.model.TrainStation;
 import com.spring.crud.demo.repository.JourneyRepository;
 import com.spring.crud.demo.repository.TrainStationRepository;
 import com.spring.crud.demo.service.JourneyService;
@@ -33,9 +31,7 @@ public class JourneyServiceImpl implements JourneyService {
 
 	@Override
 	public List<Journey> getAllWithGivenStations(int idDepartStation, int idArrivalStation) {
-		List<Journey> journeys = repository.getJourneysOfDestinations(idDepartStation, idArrivalStation);
-
-		return journeys;
+		return repository.getJourneysOfDestinations(idDepartStation, idArrivalStation);
 	}
 
 	@Override
@@ -90,8 +86,8 @@ public class JourneyServiceImpl implements JourneyService {
 	 * @return a map with all the names of the accessible stations of arrival and their associated average fare price
 	 */
 	private Map<String, Double> computeAveragePricesByStation(List<Journey> journeysFromStation) {
-		Map<String, Double> avgPriceByArrivalStation = new TreeMap<String, Double>();
-		Map<String, Integer> occurencesByStationId = new TreeMap<String, Integer>();
+		Map<String, Double> avgPriceByArrivalStation = new TreeMap<>();
+		Map<String, Integer> occurencesByStationId = new TreeMap<>();
 
 		// sum of fare prices by stations
 		for (Journey j : journeysFromStation) {

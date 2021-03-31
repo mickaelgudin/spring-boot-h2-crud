@@ -2,8 +2,6 @@ package com.spring.crud.demo.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
