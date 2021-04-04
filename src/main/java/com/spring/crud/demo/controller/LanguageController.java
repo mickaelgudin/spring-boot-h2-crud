@@ -1,8 +1,7 @@
 package com.spring.crud.demo.controller;
 
 import java.util.Locale;
-
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,12 +18,12 @@ import com.spring.crud.demo.config.LanguageManager;
  */
 public class LanguageController {
 	
-	@GetMapping("/fr")
+	@PutMapping("/fr")
     public void setFrench() {
 		 LanguageManager.setLanguageCode(Locale.FRENCH);
     }
 	 
-	@GetMapping("/en")
+	@PutMapping("/en")
     public void setEnglish() {
 		LanguageManager.setLanguageCode(Locale.ENGLISH);
     }
