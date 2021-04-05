@@ -1,8 +1,6 @@
 package com.spring.crud.demo.controller;
 
 import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.transaction.Transactional;
 
@@ -79,8 +77,9 @@ public class TrainStationController {
 	 * @param idFrom
 	 * @param idTo
 	 * @see TrainStationController#checkStation(int, String)
+	 * @return
 	 */
-	public void checkBothStationError(int idFrom, int idTo) {
+	public Boolean checkBothStationError(int idFrom, int idTo) {
 		String errorMessage = "";
 
 		String error = checkStation(idFrom, "departure");
@@ -98,6 +97,7 @@ public class TrainStationController {
 		if (!errorMessage.equals("")) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, errorMessage);
 		}
+		return true;
 	}
 
 	/**

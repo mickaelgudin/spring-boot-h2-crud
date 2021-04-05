@@ -75,4 +75,22 @@ public class TestTrainStationController {
 		
 		assertEquals("test Update", updatedStation.getName());
 	}
+
+	@Test
+	public void testCheckBothStationError() {
+		TrainStation station = new TrainStation("test", 5.0, 5.0);
+		TrainStation station2 = new TrainStation("test2", 10.0, 10.0);
+
+		ResponseEntity<?> newStation = controller.save(station);
+		TrainStation insertedStation = (TrainStation) newStation.getBody();
+
+		ResponseEntity<?> newStation2 = controller.save(station2);
+		TrainStation insertedStation2 = (TrainStation) newStation2.getBody();
+
+		Boolean response = controller.checkBothStationError(insertedStation.getTrainStationId(), insertedStation2.getTrainStationId());
+		assertTrue(response);
+
+
+	}
+
 }
