@@ -47,32 +47,7 @@ public class TrainStationServiceImpl implements TrainStationService {
 
 	@Override
 	public TrainStation update(int id, TrainStation updatedStation) {
-		TrainStation oldStation = this.checkIfStationExist(id);
-		boolean hasToBeUpdated = false;
-		
-		String newName = updatedStation.getName();
-		if(newName!= null && !newName.trim().isEmpty() && !oldStation.getName().equals(newName) ) {
-			hasToBeUpdated = true;
-			oldStation.setName(newName);
-		}
-		double newLongitude = (updatedStation.getLongitude() == null) ? 0 : updatedStation.getLongitude();
-		if(newLongitude != 0 && oldStation.getLongitude() != newLongitude) {
-			hasToBeUpdated = true;
-			oldStation.setLongitude(newLongitude);
-		}
-		double newLatitude = (updatedStation.getLatitude() == null) ? 0 : updatedStation.getLatitude();
-		if(newLatitude != 0 && oldStation.getLatitude() != newLatitude) {
-			hasToBeUpdated = true;
-			oldStation.setLongitude(newLatitude);
-		}
-		
-		//throw error if none of the following fields were modified : name, longitude, latitude
-		if( !hasToBeUpdated) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, LanguageManager.get().getString("station.notupdatable"));
-		}
-		
-		
-        return em.merge(oldStation);
+		return em.merge(updatedStation);
 	}
 
 	@Override

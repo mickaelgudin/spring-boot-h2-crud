@@ -17,9 +17,10 @@ public interface JourneyService {
 	 * 
 	 * @param stationDepart
 	 * @param stationArrival
+	 * @param langue
 	 * @return tendancy of fare prices(up, down, stable)
 	 */
-	String getTendancy(int stationDepart, int stationArrival);
+	String getTendancy(int stationDepart, int stationArrival, String langue);
 
 	/**
 	 * save the new journey

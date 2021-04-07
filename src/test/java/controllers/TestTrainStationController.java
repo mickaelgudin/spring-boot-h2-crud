@@ -30,8 +30,8 @@ public class TestTrainStationController {
 
 	@Test
 	public void testCheckStation() {
-		String errorMessage = controller.checkStation(0, "departure");
-		assertEquals(LanguageManager.get().getString("station.departure.dontexist"), errorMessage);
+		String errorMessage = controller.checkStation(0, "departure", "fr");
+		assertEquals(LanguageManager.get("fr").getString("station.departure.dontexist"), errorMessage);
 	}
 	
 	@Test
@@ -43,7 +43,7 @@ public class TestTrainStationController {
 	@Test
 	public void testSave() {
 		TrainStation station = new TrainStation("test", 5.0, 5.0);
-		ResponseEntity<?> newStation = controller.save(station);
+		ResponseEntity<?> newStation = controller.save(station, "fr");
 		TrainStation insertedStation = (TrainStation) newStation.getBody();
 		
 		assertEquals("test", insertedStation.getName());
@@ -52,25 +52,25 @@ public class TestTrainStationController {
 	@Test
 	public void testDelete() {
 		TrainStation station = new TrainStation("test", 5.0, 5.0);
-		ResponseEntity<?> newStation = controller.save(station);
+		ResponseEntity<?> newStation = controller.save(station, "fr");
 		TrainStation insertedStation = (TrainStation) newStation.getBody();
 		
-		ResponseEntity<?> response = controller.delete(insertedStation.getTrainStationId());
+		ResponseEntity<?> response = controller.delete(insertedStation.getTrainStationId(), "fr");
 		String messageDeleted = (String) response.getBody();
 		
-		assertEquals(messageDeleted, LanguageManager.get().getString("station.deleted"));
+		assertEquals(messageDeleted, LanguageManager.get("fr").getString("station.deleted"));
 	}
 
 	@Test
 	public void testUpdate() {
 		TrainStation station = new TrainStation("test", 5.0, 5.0);
-		ResponseEntity<?> newStation = controller.save(station);
+		ResponseEntity<?> newStation = controller.save(station, "fr");
 		TrainStation insertedStation = (TrainStation) newStation.getBody();
 		
 		insertedStation.setName("test Update");
 		
 		//updating new station
-		ResponseEntity<?> response = controller.update(insertedStation.getTrainStationId(), insertedStation);
+		ResponseEntity<?> response = controller.update(insertedStation.getTrainStationId(), insertedStation, "fr");
 		TrainStation updatedStation = (TrainStation) response.getBody();
 		
 		assertEquals("test Update", updatedStation.getName());
@@ -81,13 +81,13 @@ public class TestTrainStationController {
 		TrainStation station = new TrainStation("test", 5.0, 5.0);
 		TrainStation station2 = new TrainStation("test2", 10.0, 10.0);
 
-		ResponseEntity<?> newStation = controller.save(station);
+		ResponseEntity<?> newStation = controller.save(station, "fr");
 		TrainStation insertedStation = (TrainStation) newStation.getBody();
 
-		ResponseEntity<?> newStation2 = controller.save(station2);
+		ResponseEntity<?> newStation2 = controller.save(station2, "fr");
 		TrainStation insertedStation2 = (TrainStation) newStation2.getBody();
 
-		Boolean response = controller.checkBothStationError(insertedStation.getTrainStationId(), insertedStation2.getTrainStationId());
+		Boolean response = controller.checkBothStationError(insertedStation.getTrainStationId(), insertedStation2.getTrainStationId(), "fr");
 		assertTrue(response);
 
 

@@ -68,7 +68,7 @@ public class TestJourneyService {
 		int trainStationDepartId = stations.get(0).getTrainStationId();
 		int trainStationArrivalId = stations.get(2).getTrainStationId();
 
-		String tendancyPrice = serviceJourney.getTendancy(trainStationDepartId, trainStationArrivalId);
+		String tendancyPrice = serviceJourney.getTendancy(trainStationDepartId, trainStationArrivalId, "fr");
 		
 		//in original data there are journey for all stations - so there is a tendancy (stable, incresing, decreasing)
 		assertTrue("a tendancy was determine", tendancyPrice.equals("stable") || tendancyPrice.equals("up") || tendancyPrice.equals("down"));

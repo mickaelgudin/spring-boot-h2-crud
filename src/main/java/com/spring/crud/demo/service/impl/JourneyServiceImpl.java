@@ -41,10 +41,10 @@ public class JourneyServiceImpl implements JourneyService {
 
 
 	@Override
-	public String getTendancy(int idStationDepart, int idStationArrival) {
+	public String getTendancy(int idStationDepart, int idStationArrival, String langue) {
 		List<Journey> filteredJourneys = repository.getJourneysOfDestinations(idStationDepart, idStationArrival);
 		if (filteredJourneys == null || filteredJourneys.isEmpty()) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, LanguageManager.get().getString("journey.nodata"));
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, LanguageManager.get(langue).getString("journey.nodata"));
 		}
 
 		return determineTendancy(filteredJourneys);

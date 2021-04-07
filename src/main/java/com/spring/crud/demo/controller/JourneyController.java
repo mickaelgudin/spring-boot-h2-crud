@@ -24,17 +24,17 @@ public class JourneyController {
 	@Autowired
 	private TrainStationController stationController;
 
-	@GetMapping
+	@GetMapping("/{langue}")
 	public List<Journey> getAllJourneyWithStations(@RequestParam(name = "id-from") int idFrom,
-			@RequestParam(name = "id-to") int idTo) throws ResponseStatusException {
-		stationController.checkBothStationError(idFrom, idTo);
+			@RequestParam(name = "id-to") int idTo, @PathVariable String langue) throws ResponseStatusException {
+		stationController.checkBothStationError(idFrom, idTo, langue);
 
 		return journeyService.getAllWithGivenStations(idFrom, idTo);
 	}
 
-	@GetMapping("/average")
-	public Map<String, Double> getJourneysAverageByStation(@RequestParam(name = "id-from") int idFrom) {
-		String error = stationController.checkStation(idFrom, "departure");
+	@GetMapping("/{langue}/average")
+	public Map<String, Double> getJourneysAverageByStation(@RequestParam(name = "id-from") int idFrom, @PathVariable String langue) {
+		String error = stationController.checkStation(idFrom, "departure", langue);
 		if(error != null) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, error);
 		}
@@ -42,10 +42,10 @@ public class JourneyController {
 		return journeyService.getJourneysAverageByStation(idFrom);
 	}
 
-	@GetMapping("/tendancy")
-	public String getTendancy(@RequestParam(name = "id-from") int idFrom, @RequestParam(name = "id-to") int idTo) {
-		stationController.checkBothStationError(idFrom, idTo);
+	@GetMapping("/{langue}/tendancy")
+	public String getTendancy(@RequestParam(name = "id-from") int idFrom, @RequestParam(name = "id-to") int idTo, @PathVariable String langue) {
+		stationController.checkBothStationError(idFrom, idTo, langue);
 
-		return journeyService.getTendancy(idFrom, idTo);
+		return journeyService.getTendancy(idFrom, idTo, langue);
 	}
 }
