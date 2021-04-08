@@ -1,6 +1,7 @@
 package com.spring.crud.demo.service;
 
 import com.spring.crud.demo.model.Journey;
+import com.spring.demo.dto.TendancyDto;
 
 import java.util.List;
 import java.util.Map;
@@ -18,9 +19,9 @@ public interface JourneyService {
 	 * @param stationDepart
 	 * @param stationArrival
 	 * @param langue
-	 * @return tendancy of fare prices(up, down, stable)
+	 * @return tendancy and fare prices
 	 */
-	String getTendancy(int stationDepart, int stationArrival, String langue);
+	TendancyDto getTendancy(int stationDepart, int stationArrival, String langue);
 
 	/**
 	 * save the new journey

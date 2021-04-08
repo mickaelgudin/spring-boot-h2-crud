@@ -1,5 +1,6 @@
 package com.spring.crud.demo.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -9,6 +10,8 @@ import com.spring.crud.demo.model.Journey;
 import com.spring.crud.demo.repository.JourneyRepository;
 import com.spring.crud.demo.repository.TrainStationRepository;
 import com.spring.crud.demo.service.JourneyService;
+import com.spring.demo.dto.TendancyDto;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -41,7 +44,7 @@ public class JourneyServiceImpl implements JourneyService {
 
 
 	@Override
-	public String getTendancy(int idStationDepart, int idStationArrival, String langue) {
+	public TendancyDto getTendancy(int idStationDepart, int idStationArrival, String langue) {
 		List<Journey> filteredJourneys = repository.getJourneysOfDestinations(idStationDepart, idStationArrival);
 		if (filteredJourneys == null || filteredJourneys.isEmpty()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, LanguageManager.get(langue).getString("journey.nodata"));
@@ -54,24 +57,32 @@ public class JourneyServiceImpl implements JourneyService {
 	 * determine tendancy with soustraction of first and last journey
 	 * here there is hard coded text because we won't use them in the front end
 	 * @param filteredJourneys journeys of two train stations
-	 * @return tendancy of growth in the given journeys
+	 * @return tendancy and all fares prices for the given journeys
 	 */
-	private String determineTendancy(List<Journey> filteredJourneys) {
+	private TendancyDto determineTendancy(List<Journey> filteredJourneys) {
 		// defining a precise tendancy if the given journey has at least 2 records
 		if (filteredJourneys.size() >= 2) {
 			Journey firstJourney = filteredJourneys.get(0);
 			Journey lastJourney = filteredJourneys.get(filteredJourneys.size() - 1);
 
 			double balance = lastJourney.getFarePrice() - firstJourney.getFarePrice();
+			
+			List<Double> farePrices = new ArrayList<Double>();
+			for(Journey j: filteredJourneys) {
+				farePrices.add(j.getFarePrice());
+			}
 
 			if (balance < 0)
-				return "down";
+				return new TendancyDto("down", farePrices);
 
 			else if (balance > 0)
-				return "up";
+				return new TendancyDto("up", farePrices);
 		}
 
-		return "stable";
+		//setting the only available journey price
+		List<Double> farePrices = new ArrayList<Double>();
+		farePrices.add(filteredJourneys.get(0).getFarePrice());
+		return new TendancyDto("stable", farePrices);
 	}
 
 	@Override

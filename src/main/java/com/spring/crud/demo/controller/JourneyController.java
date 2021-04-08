@@ -2,6 +2,8 @@ package com.spring.crud.demo.controller;
 
 import com.spring.crud.demo.model.Journey;
 import com.spring.crud.demo.service.JourneyService;
+import com.spring.demo.dto.TendancyDto;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +45,7 @@ public class JourneyController {
 	}
 
 	@GetMapping("/{langue}/tendancy")
-	public String getTendancy(@RequestParam(name = "id-from") int idFrom, @RequestParam(name = "id-to") int idTo, @PathVariable String langue) {
+	public TendancyDto getTendancy(@RequestParam(name = "id-from") int idFrom, @RequestParam(name = "id-to") int idTo, @PathVariable String langue) {
 		stationController.checkBothStationError(idFrom, idTo, langue);
 
 		return journeyService.getTendancy(idFrom, idTo, langue);

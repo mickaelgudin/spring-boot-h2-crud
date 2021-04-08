@@ -35,6 +35,12 @@ public class LanguageManager {
 				langue = Locale.FRENCH;
 			} else if(languageCode.equals("en")) {
 				langue = Locale.ENGLISH;
+			} else if(languageCode.equals("es")) {
+				langue = new Locale("es", "ES");
+			} else if(languageCode.equals("de")) {
+				langue = Locale.GERMAN;
+			} else if(languageCode.equals("it")) {
+				langue = Locale.ITALIAN;
 			}
 			
 			return ResourceBundle.getBundle("language", langue);
