@@ -27,7 +27,6 @@ public class SpringBootH2CRUDApplication {
 	private JourneyRepository journeyRepo;
 	
 	public static void main(String[] args) {
-		LanguageManager.get();
 		SpringApplication.run(SpringBootH2CRUDApplication.class, args);
 	}
 	
