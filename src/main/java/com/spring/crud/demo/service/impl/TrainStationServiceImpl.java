@@ -5,24 +5,18 @@ import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
-import com.spring.crud.demo.config.LanguageManager;
 import com.spring.crud.demo.model.TrainStation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.spring.crud.demo.repository.TrainStationRepository;
-import com.spring.crud.demo.service.JourneyService;
 import com.spring.crud.demo.service.TrainStationService;
 
 
 /**
- * service layer for train station containing all the business logic
- * 
- * @see JourneyService inherited java doc
+ * service layer for train station containing all the business logic for train stations
+ * @see TrainStationService inherited java doc
  * @author mickaelgudin
  */
 @Service

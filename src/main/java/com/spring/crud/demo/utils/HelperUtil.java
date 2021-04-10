@@ -12,6 +12,7 @@ import com.spring.crud.demo.model.TrainStation;
 
 /**
  * Class for useful methods(get initial data, get formatted date)
+ * 
  * @author mickaelgudin
  */
 public class HelperUtil {
@@ -23,7 +24,7 @@ public class HelperUtil {
 	/**
 	 * get initial train stations
 	 * 
-	 * @return
+	 * @return all stations to be inserted
 	 */
 	public List<TrainStation> getTrainsStations() {
 		TrainStation versailles = df.getTrainStationVersaillesChantiers();
@@ -51,17 +52,18 @@ public class HelperUtil {
 	 * @param arrivee
 	 * @return
 	 */
-	public List<Journey> getJourneysWithIncreasingPrice(TrainStation depart, TrainStation arrivee, LineTrainStation line) {
+	public List<Journey> getJourneysWithIncreasingPrice(TrainStation depart, TrainStation arrivee,
+			LineTrainStation line) {
 		List<Journey> journeysWithIncreasingPrice = new ArrayList<>();
 
-		for(int price=10; price<50; price=price+10) {
-			int day = price /10; //setting prices for last 2-5 days
-			
+		for (int price = 10; price < 50; price = price + 10) {
+			int day = price / 10; // setting prices for last 2-5 days
+
 			journeysWithIncreasingPrice
-				.add(df.getJourneyWithPrice(depart, arrivee, LocalDateTime.now().minusDays(day), price, line) );
+					.add(df.getJourneyWithPrice(depart, arrivee, LocalDateTime.now().minusDays(day), price, line));
 		}
 
-		//we also want steady price at least for today
+		// we also want steady price at least for today
 		journeysWithIncreasingPrice.addAll(getJourneysWithStablePrice(depart, arrivee, line));
 
 		return journeysWithIncreasingPrice;
@@ -69,22 +71,22 @@ public class HelperUtil {
 
 	/**
 	 * journeys with decreasing prices
-	 * 
 	 * @param depart
 	 * @param arrivee
 	 * @return
 	 */
-	public List<Journey> getJourneysWithDecreasingPrice(TrainStation depart, TrainStation arrivee, LineTrainStation line) {
+	public List<Journey> getJourneysWithDecreasingPrice(TrainStation depart, TrainStation arrivee,
+			LineTrainStation line) {
 		List<Journey> journeysWithDecreasingPrice = new ArrayList<>();
 
-		for(int price=80; price > 10; price=price-10) {
-			int day = price /10; //setting prices for last 2-5 days
-			
+		for (int price = 80; price > 10; price = price - 10) {
+			int day = price / 10; // setting prices for last 2-5 days
+
 			journeysWithDecreasingPrice
-				.add(df.getJourneyWithPrice(depart, arrivee, LocalDateTime.now().minusDays(day), price, line));
+					.add(df.getJourneyWithPrice(depart, arrivee, LocalDateTime.now().minusDays(day), price, line));
 		}
-		
-		//we also want steady price at least for today
+
+		// we also want steady price at least for today and tomorrow
 		journeysWithDecreasingPrice.addAll(getJourneysWithStablePrice(depart, arrivee, line));
 
 		return journeysWithDecreasingPrice;
@@ -96,27 +98,33 @@ public class HelperUtil {
 	 * @param depart
 	 * @param arrivee
 	 * @param line
-	 * @return
+	 * @return journeys with stable prices
 	 */
 	public List<Journey> getJourneysWithStablePrice(TrainStation depart, TrainStation arrivee, LineTrainStation line) {
 		List<Journey> journeysWithStablePrice = new ArrayList<>();
 
 		LocalDateTime now = LocalDateTime.now();
+		now = LocalDateTime.of(now.getYear(), now.getMonth(), now.getDayOfMonth(), now.getHour(), 0);
 		// get schedule for today from 8am to 9pm
 		for (int hour = 8; hour < 20; hour++) {
-			Journey newJourney = df.getJourneyWithPrice(depart, arrivee,
-					LocalDateTime.of(now.getYear(), now.getMonth(), now.getDayOfMonth(), hour, 0), 50, line);
+			Journey journeyForTommorow = df.getJourneyWithPrice(depart, arrivee, 
+																now.plusDays(1).withHour(hour), 50, line);
+			journeysWithStablePrice.add(journeyForTommorow);
+			
+			Journey newJourney = df.getJourneyWithPrice(depart, arrivee, now.withHour(hour), 50, line);
 			journeysWithStablePrice.add(newJourney);
 		}
 
+		
+		
 		return journeysWithStablePrice;
 	}
-	
+
 	/**
-	 * format the given date with a certain pattern(for our dates stored in the database)
+	 * format the given date with a certain pattern(for our dates stored in the
+	 * database)
 	 * @param date
-	 * @see entities
-	 * @return formattedDate
+	 * @return formatted date
 	 */
 	public static LocalDateTime getFormattedDate(LocalDateTime date) {
 		String pattern = "yyyy-MM-dd HH:mm:ss";

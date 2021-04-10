@@ -22,6 +22,10 @@ public class DefaultController {
 
     @Operation(summary = "Database url", hidden = true)
     @GetMapping("/database")
+    /**
+     * only accessible localy, heroku freeplan blocks it
+     * @return
+     */
     public ResponseEntity<Void> databaseUrl() {
         return ResponseEntity.status(HttpStatus.FOUND)
                 .location(URI.create("h2-console"))

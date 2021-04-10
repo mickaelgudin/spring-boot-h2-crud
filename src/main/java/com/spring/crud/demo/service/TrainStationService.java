@@ -5,9 +5,13 @@ import java.util.List;
 
 import com.spring.crud.demo.model.TrainStation;
 
+/**
+ * service layer interface for train stations
+ * @author mickaelgudin
+ */
 public interface TrainStationService {
 	/**
-	 * get all stations from database
+	 * get all stations from the database
 	 * @return a list of all existing stations
 	 */
 	List<TrainStation> getAll();

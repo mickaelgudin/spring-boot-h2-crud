@@ -1,7 +1,5 @@
 package com.spring.crud.demo;
 
-import com.spring.crud.demo.config.LanguageManager;
-
 import com.spring.crud.demo.model.Journey;
 import com.spring.crud.demo.model.TrainStation;
 import com.spring.crud.demo.repository.JourneyRepository;

@@ -8,7 +8,6 @@ import java.util.TreeMap;
 import com.spring.crud.demo.config.LanguageManager;
 import com.spring.crud.demo.model.Journey;
 import com.spring.crud.demo.repository.JourneyRepository;
-import com.spring.crud.demo.repository.TrainStationRepository;
 import com.spring.crud.demo.service.JourneyService;
 import com.spring.demo.dto.TendancyDto;
 
@@ -20,7 +19,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 /**
  * service layer for journey containing all the business logic of journeys
- * 
  * @see JourneyService inherited java doc
  * @author NicolasLewin
  */
@@ -29,8 +27,6 @@ public class JourneyServiceImpl implements JourneyService {
 
 	@Autowired
 	private JourneyRepository repository;
-	@Autowired
-	private TrainStationRepository repositoryStation;
 
 	@Override
 	public List<Journey> getAllWithGivenStations(int idDepartStation, int idArrivalStation) {

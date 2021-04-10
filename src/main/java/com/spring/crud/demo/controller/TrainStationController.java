@@ -23,7 +23,8 @@ import com.spring.crud.demo.service.TrainStationService;
  * @author mickaelgudin
  */
 public class TrainStationController {
-
+	static final String DEPARTURE_TYPE = "departure";
+	
 	@Autowired
 	private TrainStationService trainStationService;
 
@@ -50,7 +51,7 @@ public class TrainStationController {
 
 	@PutMapping("/{langue}/{id}")
 	public ResponseEntity<?> update(@PathVariable int id, @RequestBody TrainStation trainStation, @PathVariable String langue) {
-		String errorMessage = this.checkStation(id, "departure", langue);
+		String errorMessage = this.checkStation(id, DEPARTURE_TYPE, langue);
 		if (errorMessage != null) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, errorMessage);
 		}
@@ -92,7 +93,7 @@ public class TrainStationController {
 	@DeleteMapping("/{langue}/{id}")
 	@Transactional
 	public ResponseEntity<?> delete(@PathVariable int id, @PathVariable String langue) {
-		String errorMessage = this.checkStation(id, "departure", langue);
+		String errorMessage = this.checkStation(id, DEPARTURE_TYPE, langue);
 		if (errorMessage != null) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, errorMessage);
 		}
@@ -107,12 +108,12 @@ public class TrainStationController {
 	 * @param idFrom
 	 * @param idTo
 	 * @see TrainStationController#checkStation(int, String)
-	 * @return
+	 * @return true if the two stations exists
 	 */
 	public Boolean checkBothStationError(int idFrom, int idTo, String langue) {
 		String errorMessage = "";
 
-		String error = checkStation(idFrom, "departure", langue);
+		String error = checkStation(idFrom, DEPARTURE_TYPE, langue);
 		// checking if stations exist
 		if (error != null) {
 			errorMessage += error;

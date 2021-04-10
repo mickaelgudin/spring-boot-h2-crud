@@ -1,6 +1,7 @@
 package services;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -70,7 +71,7 @@ public class TestTrainStationService {
 		
 		List<TrainStation> updatedStations = stationService.getAll();
 		
-		assertTrue(updatedStations.size() != stations.size());
+		assertNotEquals(updatedStations.size(), stations.size());
 	}
 
 }
