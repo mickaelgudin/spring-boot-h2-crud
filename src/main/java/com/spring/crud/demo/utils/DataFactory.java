@@ -23,15 +23,15 @@ public class DataFactory {
 	}
 
 	public TrainStation getTrainStationVersaillesChantiers() {
-    	return new TrainStation("Gare de Versailles Chantiers", 48.795717, 2.135468);
+    	return new TrainStation("Gare de Versailles Chantiers", 2.135468, 48.795717);
     }
     
     public TrainStation getTrainStationMontparnasse() {
-    	return new TrainStation("Gare Montparnasse", 48.841214, 2.319118);
+    	return new TrainStation("Gare Montparnasse", 2.319118, 48.841214);
     }
     
     public TrainStation getTrainStationLaDefense() {
-    	return new TrainStation("Gare de la Défense (Grande Arche)", 48.891731, 2.239209);
+    	return new TrainStation("Gare de la Défense (Grande Arche)", 2.239209, 48.891731);
     }
 
     public Journey getJourneyWithPrice(TrainStation depart, TrainStation arrivee, LocalDateTime startDate, double farePrice, LineTrainStation line) {
