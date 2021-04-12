@@ -78,7 +78,7 @@ public class TrainStationController {
 		double newLatitude = (trainStation.getLatitude() == null) ? 0 : trainStation.getLatitude();
 		if(newLatitude != 0 && oldStation.getLatitude() != newLatitude) {
 			hasToBeUpdated = true;
-			oldStation.setLongitude(newLatitude);
+			oldStation.setLatitude(newLatitude);
 		}
 		
 		//throw error if none of the following fields were modified : name, longitude, latitude
