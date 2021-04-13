@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import com.spring.crud.demo.config.LanguageManager;
 import com.spring.crud.demo.model.TrainStation;
 import com.spring.crud.demo.repository.JourneyRepository;
+import com.spring.crud.demo.repository.TrainStationRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,9 @@ public class TrainStationController {
 	private TrainStationService trainStationService;
 
 	@Autowired
+	private TrainStationRepository stationRepository;
+	
+	@Autowired
 	private JourneyRepository journeyRepository;
 
 	@GetMapping
@@ -47,6 +51,18 @@ public class TrainStationController {
 		}
 
 		return ResponseEntity.ok().body(savedTrainStation);
+	}
+	
+	@PostMapping("all/{langue}")
+	public String saveAll(@RequestBody List<TrainStation> trainStations, @PathVariable String langue) {
+
+		try {
+			stationRepository.saveAll(trainStations);
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, LanguageManager.get(langue).getString("station.errorNew"));
+		}
+
+		return "ok";
 	}
 
 	@PutMapping("/{langue}/{id}")
