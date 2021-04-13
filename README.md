@@ -2,7 +2,7 @@
 
 Back end for the project archi web, this projet is configure with CI CD, automatic deployment is done to heroku when merging or pushing in the main branch.
 
-Please refer to this repo for the front end made with VueJs : https://github.com/jdoujet/archiweb/tree/julien-config-leaflet
+Please refer to this repo for the front end made with VueJs : https://github.com/jdoujet/archiweb/tree/master 
 
 **Features**
 
